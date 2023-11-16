@@ -27,18 +27,18 @@ def obter_preco_material(material):
 
     precos_por_material = {
         "PLA": 120.0/1000,
-        "TPU": 150.0/1000,
-        "ABS": 100.0/1000,
-        "PETG": 130.0/1000
+        "TPU": 200.0/1000,
+        "ABS": 130.0/1000,
+        "PETG": 150.0/1000
     }
     return precos_por_material.get(material, 0.0)
 
 def obter_peso_gramas(material,volume):
 
-    densidade_pla  =  1.35
-    densidade_tpu  =  0.85
-    densidade_abs  =  1.65
-    densidade_petg =  1.45
+    densidade_pla  =  1.27
+    densidade_tpu  =  1.22
+    densidade_abs  =  1.05
+    densidade_petg =  1.26
 
     if material == "PLA":
         peso_em_gramas = volume/densidade_pla
