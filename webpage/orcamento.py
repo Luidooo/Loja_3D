@@ -123,3 +123,5 @@ def main():
 if __name__ == "__main__":
     main()
 
+#eh preciso adicionar os novos metodos de calcular o peso da peca
+#pensei em adiconar o metodo, pegando o volume e dividindo pela densidade, descobrindo assim o peso da peca em gramas, para ai sim calcularmos o peso final e calcularmos o orcamento
