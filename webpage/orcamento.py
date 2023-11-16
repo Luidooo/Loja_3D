@@ -1,12 +1,12 @@
 import streamlit as st
 import math
 
-def calcula_orcamento(volume, taxa_hora_maquina, preco_material):
+def calcula_orcamento(volume, taxa_hora_maquina, preco_material, peso_em_gramas):
 
     # Lógica para calcular o preço com base no volume, taxa da hora da máquina e preço do material
 
     preco_maquina = taxa_hora_maquina * (volume / 1000)  # Convertendo para litros
-    preco_total = (preco_material*volume) + preco_maquina
+    preco_total = (peso_em_gramas*preco_material) + preco_maquina
     return preco_total
 
 def obter_taxa_hora_maquina(impressora):
@@ -32,6 +32,27 @@ def obter_preco_material(material):
         "PETG": 130.0/1000
     }
     return precos_por_material.get(material, 0.0)
+
+def obter_peso_gramas(material,volume):
+
+    densidade_pla  =  1.35
+    densidade_tpu  =  0.85
+    densidade_abs  =  1.65
+    densidade_petg =  1.45
+
+    if material == "PLA":
+        peso_em_gramas = volume/densidade_pla
+
+    if material == "TPU":
+        peso_em_gramas = volume/densidade_tpu
+
+    if material == "ABS":
+        peso_em_gramas = volume/densidade_abs
+
+    if material == "PETG":
+        peso_em_gramas = volume/densidade_petg
+
+    return peso_em_gramas
 
 def calcula_volume_retangulo(comprimento, largura, altura):
     return comprimento * largura * altura
@@ -109,12 +130,15 @@ def main():
     # Obtém o preço do material com base no material selecionado
     preco_material = obter_preco_material(material_selecionado)
 
+    #Obtem o peso em gramas
+    peso_em_gramas = obter_peso_gramas(material_selecionado,volume_total)
+
     # Exibe o preço do material
     st.subheader("Preço do Material:")
     st.write(f"R$ {preco_material:.2f} por cm³")
 
     # Calcula o preço com base no volume, taxa da hora da máquina e preço do material
-    preco = calcula_orcamento(volume_total, taxa_hora_maquina, preco_material)
+    preco = calcula_orcamento(volume_total, taxa_hora_maquina, preco_material, peso_em_gramas)
 
     # Exibe o preço calculado
     st.subheader("Preço estimado:")
